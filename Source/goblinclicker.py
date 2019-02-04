@@ -5,6 +5,7 @@ import numpy as np
 import cv2
 import random
 import pyautogui
+import tkinter
 
 #placeholder
 centre = (0, 0)
@@ -12,7 +13,7 @@ centre = (0, 0)
 resize_factor = 0.5
 threshold = 20
 delay_screengrab = 0.05
-delay_sequence = 45
+delay_sequence = 55
 #box_size_threshold = 50
 delay_combat = 7
 
@@ -35,6 +36,14 @@ def screengrab():
 
 def grayscale(tup):
     return int(tup[0]*0.3+tup[1]*0.6+tup[2]*0.1)
+
+def resolution():
+ 
+    root = tkinter.Tk()
+    width = root.winfo_screenwidth()
+    height = root.winfo_screenheight()
+    print(width, height)
+    return width, height
 
 def boundingbox2(img):
     im = img #lazy fix, TODO fix properly
@@ -95,7 +104,11 @@ def find_centre(box):
     return (cx, cy)
 def in_combat(img):
     in_combat = False
-    box = (635, 340, 750, 390)
+    ratios = (635/1366, 340/768, 750/1366, 390/768) #TODO this should scale with resolution
+    
+    width, height = resolution()
+    box = (int(ratios[0]*width), int(ratios[1]*height), int(ratios[2]*width), int(ratios[3]*height))
+
     subimage = img[box[1]:box[3], box[0]:box[2]]
     number_of_pixels = (box[2]-box[0])*(box[3]-box[1])
     prev_was_green = False
@@ -275,10 +288,8 @@ def do_one_sequence():
     return
 
 def sequence_forever():
-    #time.sleep(2)
     while True:
         do_one_sequence()
-        #time.sleep(delay_sequence)
 
     
 #Replace this with a main entrypoint
