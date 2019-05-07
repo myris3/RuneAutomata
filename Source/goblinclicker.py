@@ -13,7 +13,7 @@ centre = (0, 0)
 resize_factor = 0.5
 threshold = 20
 delay_screengrab = 0.05
-delay_sequence = 55
+delay_sequence = 35
 #box_size_threshold = 50
 delay_combat = 7
 
@@ -264,10 +264,13 @@ def do_one_sequence():
         click_random(scaledc)
     
     #Check if in combat
-    time.sleep(delay_combat)
+    time.sleep(delay_combat+random.randint(-2, 2))
     eval_combat = screenshot()
-    if in_combat(eval_combat):
-        time.sleep(delay_sequence)
+    while in_combat(eval_combat):
+        #time.sleep(delay_sequence+random.randint(-5,5))
+        time.sleep(5+random.randint(-2, 2))
+        eval_combat = screenshot()
+
 
 
 
