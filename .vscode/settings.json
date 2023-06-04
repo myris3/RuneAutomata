@@ -1,0 +1,8 @@
+{
+    "python.formatting.provider": "none",
+    "python.formatting.autopep8Args": ["--experimental --aggressive"],
+    "editor.formatOnSave": true,
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.autopep8"
+    }
+}
